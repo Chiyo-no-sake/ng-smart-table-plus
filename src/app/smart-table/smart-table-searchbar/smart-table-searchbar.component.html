@@ -1,0 +1,11 @@
+<form class="form my-2">
+  <div class="input-group">
+    <input class="form-control" type="search" placeholder="Search" aria-label="Search" #searchBar>
+    <div class="input-group-append">
+      <button [disabled]="loading" class="btn btn-primary" id="searchIcon" (click)="submitSearch()">
+        <fa-icon [icon]="searchIcon" *ngIf="!loading"></fa-icon>
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="loading"></span>
+      </button>
+    </div>
+  </div>
+</form>

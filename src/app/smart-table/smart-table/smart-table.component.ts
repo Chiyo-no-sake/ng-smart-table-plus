@@ -1,7 +1,8 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {RequestData, ResponseData, SmartTableDataService} from '../services/smart-table-data.service';
 import {Observable} from 'rxjs';
 import {SmartTableBottomBarComponent} from '../smart-table-bottom-bar/smart-table-bottom-bar.component';
+import {SmartTableSearchbarComponent} from '../smart-table-searchbar/smart-table-searchbar.component';
 
 
 @Component({
@@ -18,7 +19,10 @@ export class SmartTableComponent<T> implements OnInit {
   @Input() getCellContent: (t: T, header: string) => string;
   @Input() onClick: (t: T) => void;
   @Input() getData: (requestData: RequestData) => Observable<ResponseData<T>>;
+
   @ViewChild(SmartTableBottomBarComponent) bottomBar: SmartTableBottomBarComponent<T>;
+  @ViewChild(SmartTableSearchbarComponent) searchBar: SmartTableSearchbarComponent;
+
   requestData: RequestData;
 
   private static checkInput(inputEl: any, inputName: string): void {
@@ -34,7 +38,7 @@ export class SmartTableComponent<T> implements OnInit {
     SmartTableComponent.checkInput(this.getData, 'getData');
     this.requestData = {
       paginationEnabled: true,
-      pageSize: 3,
+      pageSize: 5,
       pageNumber: 0,
       sortEnabled: true,
       sortHeaderName: this.headers[2],
@@ -55,5 +59,17 @@ export class SmartTableComponent<T> implements OnInit {
       this.dataService.responseData = t;
       this.bottomBar.loading = false;
     });
+  }
+
+  onSearchSubmit(keywords: string): void {
+    this.requestData.searchQuery = keywords;
+    this.getData(this.requestData).subscribe(
+      t => {
+        this.dataService.responseData = t;
+        if(t.pagesNumber < this.bottomBar.)
+
+        this.searchBar.loading = false;
+      }
+    );
   }
 }

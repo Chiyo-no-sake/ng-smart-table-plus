@@ -54,19 +54,19 @@ export class AppComponent implements OnInit {
   };
 
   getData = (requestData: RequestData): Observable<ResponseData<Post>> => {
-    const arr: Post[] = [{
-        title: 'Test',
-        description: 'TestDesc',
-        price: 300,
-        id: '1',
-        date: '1',
-        category: 'stuff',
-        author: 'mario',
-        type: 'sex',
-        location: 'culo',
-        status: 'open'
-      }];
-
+    // const arr: Post[] = [{
+    //     title: 'Test',
+    //     description: 'TestDesc',
+    //     price: 300,
+    //     id: '1',
+    //     date: '1',
+    //     category: 'stuff',
+    //     author: 'mario',
+    //     type: 'sex',
+    //     location: 'culo',
+    //     status: 'open'
+    //   }];
+    //
     // return of({pagesNumber: null, data: arr, elementsNumber: arr.length} as ResponseData<Post>);
 
     let query = '?';
