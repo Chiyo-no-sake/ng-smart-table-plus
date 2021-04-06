@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import {of} from 'rxjs';
 
 type Post = {
   id: string;
@@ -29,29 +30,17 @@ export class AppComponent {
     this.posts = [];
   }
 
-  getCellContent(post: Post, header: string): string {
+  getCellContent = (post: Post, header: string): string => {
     return post[header.toLowerCase()];
   }
 
   getData = (requestData) => {
-    this.fetchPosts();
-    console.log('After call', this.posts);
-    return this.posts;
+    // const arr = [{title: 'Test', description: 'TestDesc', price: 'price'}];
+    // return of(arr);
+    return this.http.get<Post[]>(this.postsURI);
   }
 
-  onClick(p: Post): void {
+  onClick = (p: Post): void => {
     console.log(`Clicked: ${p.id}`);
-  }
-
-  private fetchPosts(): void {
-    this.http
-      .get<Post[]>(this.postsURI)
-      .subscribe((posts) => {
-        this.posts = [];
-        posts.forEach(p => {
-          this.posts.push(p);
-        });
-        console.log('On completion', this.posts);
-      });
   }
 }

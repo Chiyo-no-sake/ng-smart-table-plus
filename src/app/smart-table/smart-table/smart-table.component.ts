@@ -1,5 +1,6 @@
-import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {SmartTableDataService} from '../services/smart-table-data.service';
+import {Observable} from 'rxjs';
 
 type RequestData = {
   sortEnabled: boolean;
@@ -24,8 +25,7 @@ export class SmartTableComponent<T> implements OnInit {
   @Input() headers: string[];
   @Input() getCellContent: (t: T, header: string) => string;
   @Input() onClick: (t: T) => void;
-  @Input() getData: (requestData: RequestData) => T[];
-  data: T[];
+  @Input() getData: (requestData: RequestData) => Observable<T[]>;
 
   private static checkInput(inputEl: any, inputName: string): void {
     if (inputEl === null) {
@@ -39,13 +39,12 @@ export class SmartTableComponent<T> implements OnInit {
     SmartTableComponent.checkInput(this.onClick, 'onClick');
     SmartTableComponent.checkInput(this.getData, 'getData');
 
-    this.data = this.getData({
+    this.getData({
       paginationEnabled: false,
       sortEnabled: false,
-    });
+    }).subscribe(t => this.dataService.data = t);
 
     this.dataService.headers = this.headers;
-    this.dataService.data = this.data;
     this.dataService.getCellContent = this.getCellContent;
     this.dataService.onClick = this.onClick;
   }

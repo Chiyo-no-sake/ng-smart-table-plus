@@ -8,7 +8,6 @@ import {SmartTableDataService} from '../services/smart-table-data.service';
   styleUrls: ['./smart-table-content.component.css']
 })
 export class SmartTableContentComponent<T> implements OnInit {
-  @Input() data: T[];
 
   constructor(public dataService: SmartTableDataService<T>) {
   }
