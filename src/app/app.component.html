@@ -1,3 +1,9 @@
 <h1>This is the app component</h1>
 <hr>
-<app-smart-table></app-smart-table>
+<app-smart-table
+  [getCellContent]="getCellContent"
+  [headers]="headers"
+  [getData]="getData"
+  [onClick]="onClick">
+
+</app-smart-table>
