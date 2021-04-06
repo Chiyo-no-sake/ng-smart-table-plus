@@ -1,14 +1,18 @@
-<nav>
-  <ul class="pagination">
-    <li *ngFor="let li of generateRowIndices()"
-        [ngClass]="{active: li == requestData.pageNumber}"
-        (click)="onPageChange(li)"
-        class="page-item">
-      <a
-        class="page-link"
-        href="#">
-        {{li}}
-      </a>
-    </li>
-  </ul>
-</nav>
+<div class="row m-2">
+  <nav>
+    <ul class="pagination">
+      <li *ngFor="let li of generateRowIndices()"
+          [ngClass]="{active: li == requestData.pageNumber}"
+          (click)="onPageChange(li)"
+          class="page-item">
+        <a
+          class="page-link"
+          href="#">
+          {{li}}
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <div *ngIf="loading" class="spinner-grow spinner-grow-sm ml-3 mt-md-2 text-primary">
+  </div>
+</div>

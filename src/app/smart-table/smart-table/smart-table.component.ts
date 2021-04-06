@@ -1,6 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {RequestData, ResponseData, SmartTableDataService} from '../services/smart-table-data.service';
 import {Observable} from 'rxjs';
+import {SmartTableBottomBarComponent} from '../smart-table-bottom-bar/smart-table-bottom-bar.component';
 
 
 @Component({
@@ -17,6 +18,7 @@ export class SmartTableComponent<T> implements OnInit {
   @Input() getCellContent: (t: T, header: string) => string;
   @Input() onClick: (t: T) => void;
   @Input() getData: (requestData: RequestData) => Observable<ResponseData<T>>;
+  @ViewChild(SmartTableBottomBarComponent) bottomBar: SmartTableBottomBarComponent<T>;
   requestData: RequestData;
 
   private static checkInput(inputEl: any, inputName: string): void {
@@ -32,7 +34,7 @@ export class SmartTableComponent<T> implements OnInit {
     SmartTableComponent.checkInput(this.getData, 'getData');
     this.requestData = {
       paginationEnabled: true,
-      pageSize: 10,
+      pageSize: 3,
       pageNumber: 0,
       sortEnabled: true,
       sortHeaderName: this.headers[2],
@@ -47,8 +49,11 @@ export class SmartTableComponent<T> implements OnInit {
   }
 
   onPageChanged(pageNumber: { pageSelected: number }): void {
-    console.log('onPageChanged: ' + pageNumber.pageSelected);
     this.requestData.pageNumber = pageNumber.pageSelected;
-    this.getData(this.requestData).subscribe(t => this.dataService.responseData = t);
+    this.bottomBar.loading = true;
+    this.getData(this.requestData).subscribe(t => {
+      this.dataService.responseData = t;
+      this.bottomBar.loading = false;
+    });
   }
 }

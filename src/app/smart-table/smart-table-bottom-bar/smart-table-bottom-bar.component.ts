@@ -9,6 +9,7 @@ import {RequestData, SmartTableDataService} from '../services/smart-table-data.s
 export class SmartTableBottomBarComponent<T> implements OnInit {
   @Input() requestData: RequestData;
   @Output() pageChanged = new EventEmitter<{ pageSelected: number }>();
+  loading = false;
 
   constructor(public dataService: SmartTableDataService<T>) {
   }
@@ -16,7 +17,7 @@ export class SmartTableBottomBarComponent<T> implements OnInit {
   ngOnInit(): void {
   }
 
-  public generateRowIndices(): number[] {
+  generateRowIndices(): number[] {
     const indexes = [];
     for (let i = 0; i < this.dataService.responseData.pagesNumber; i++) {
       indexes.push(i);
