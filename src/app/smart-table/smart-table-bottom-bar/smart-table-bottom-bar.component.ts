@@ -10,6 +10,7 @@ export class SmartTableBottomBarComponent<T> implements OnInit {
   @Input() requestData: RequestData;
   @Output() pageChanged = new EventEmitter<{ pageSelected: number }>();
   loading = false;
+  selectedPageNumber: number;
 
   constructor(public dataService: SmartTableDataService<T>) {
   }
@@ -19,13 +20,14 @@ export class SmartTableBottomBarComponent<T> implements OnInit {
 
   generateRowIndices(): number[] {
     const indexes = [];
-    for (let i = 0; i < this.dataService.responseData.pagesNumber; i++) {
+    for (let i = 1; i <= this.dataService.responseData.pagesNumber; i++) {
       indexes.push(i);
     }
     return indexes;
   }
 
   onPageChange(pageNumber: number): void {
+    this.selectedPageNumber = pageNumber;
     this.pageChanged.emit({
       pageSelected: pageNumber,
     });

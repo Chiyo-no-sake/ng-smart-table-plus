@@ -7,6 +7,7 @@ import {SmartTableContentComponent} from './smart-table-content/smart-table-cont
 import {SmartTableBottomBarComponent} from './smart-table-bottom-bar/smart-table-bottom-bar.component';
 import {SmartTableSearchbarComponent} from './smart-table-searchbar/smart-table-searchbar.component';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [SmartTableComponent,
@@ -16,7 +17,8 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
                  SmartTableBottomBarComponent],
   imports: [
     CommonModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    FormsModule
   ],
   exports: [SmartTableComponent],
   providers: [SmartTableDataService],

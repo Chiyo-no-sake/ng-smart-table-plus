@@ -53,7 +53,7 @@ export class SmartTableComponent<T> implements OnInit {
   }
 
   onPageChanged(pageNumber: { pageSelected: number }): void {
-    this.requestData.pageNumber = pageNumber.pageSelected;
+    this.requestData.pageNumber = pageNumber.pageSelected - 1;
     this.bottomBar.loading = true;
     this.getData(this.requestData).subscribe(t => {
       this.dataService.responseData = t;
@@ -62,12 +62,11 @@ export class SmartTableComponent<T> implements OnInit {
   }
 
   onSearchSubmit(keywords: string): void {
+    this.requestData.pageNumber = 0;
     this.requestData.searchQuery = keywords;
     this.getData(this.requestData).subscribe(
       t => {
         this.dataService.responseData = t;
-        if(t.pagesNumber < this.bottomBar.)
-
         this.searchBar.loading = false;
       }
     );
