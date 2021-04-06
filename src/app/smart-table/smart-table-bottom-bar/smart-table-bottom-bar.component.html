@@ -2,7 +2,7 @@
   <nav>
     <ul class="pagination">
       <li *ngFor="let li of generateRowIndices()"
-          [ngClass]="{active: li == requestData.pageNumber}"
+          [ngClass]="{active: li == requestData.pageNumber + 1}"
           (click)="onPageChange(li)"
           class="page-item">
         <a

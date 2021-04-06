@@ -64,6 +64,7 @@ export class SmartTableComponent<T> implements OnInit {
   onSearchSubmit(keywords: string): void {
     this.requestData.pageNumber = 0;
     this.requestData.searchQuery = keywords;
+    this.searchBar.loading = true;
     this.getData(this.requestData).subscribe(
       t => {
         this.dataService.responseData = t;

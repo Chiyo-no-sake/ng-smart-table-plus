@@ -19,7 +19,6 @@ export class SmartTableSearchbarComponent implements OnInit {
   }
 
   submitSearch(): boolean {
-    this.loading = true;
     this.searchSubmit.emit((this.searchBar.nativeElement as HTMLInputElement).value);
     return false;
   }
