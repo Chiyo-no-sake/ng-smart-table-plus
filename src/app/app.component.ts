@@ -25,7 +25,9 @@ export class AppComponent {
   posts: Post[];
   postsURI = 'http://isin03.dti.supsi.ch:81/template/bff/items?direction=desc&sort=price';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.posts = [];
+  }
 
   getCellContent(post: Post, header: string): string {
     return post[header.toLowerCase()];
@@ -33,6 +35,7 @@ export class AppComponent {
 
   getData = (requestData) => {
     this.fetchPosts();
+    console.log('After call', this.posts);
     return this.posts;
   }
 
@@ -42,9 +45,13 @@ export class AppComponent {
 
   private fetchPosts(): void {
     this.http
-        .get<Post[]>(this.postsURI)
-        .subscribe((posts) => {
-          this.posts = posts;
+      .get<Post[]>(this.postsURI)
+      .subscribe((posts) => {
+        this.posts = [];
+        posts.forEach(p => {
+          this.posts.push(p);
         });
+        console.log('On completion', this.posts);
+      });
   }
 }

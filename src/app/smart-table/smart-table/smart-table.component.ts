@@ -1,5 +1,5 @@
 import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
-import {SmartTableDataService} from '../smart-table-data.service';
+import {SmartTableDataService} from '../services/smart-table-data.service';
 
 type RequestData = {
   sortEnabled: boolean;
@@ -18,7 +18,7 @@ type RequestData = {
 })
 export class SmartTableComponent<T> implements OnInit {
 
-  constructor(private dataService: SmartTableDataService<T>) {
+  constructor(public dataService: SmartTableDataService<T>) {
   }
 
   @Input() headers: string[];

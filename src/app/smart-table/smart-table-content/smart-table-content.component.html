@@ -1,0 +1,3 @@
+<tr (click)="dataService.onClick(element)" *ngFor="let element of data">
+  <td *ngFor="let header of dataService.headers">{{dataService.getCellContent(element, header)}}</td>
+</tr>

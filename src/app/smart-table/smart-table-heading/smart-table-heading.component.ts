@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {SmartTableDataService} from '../smart-table-data.service';
+import {SmartTableDataService} from '../services/smart-table-data.service';
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: '[app-smart-table-heading]',
   templateUrl: './smart-table-heading.component.html',
   styleUrls: ['./smart-table-heading.component.css'],

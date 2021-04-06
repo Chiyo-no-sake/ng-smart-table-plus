@@ -1,8 +1,8 @@
 <div class="table-responsive debug">
   <!-- <table-top-bar></table-top-bar> -->
   <table class="table">
-    <thead>
-      <tr app-smart-table-heading></tr>
+    <thead app-smart-table-heading>
     </thead>
+    <tbody app-smart-table-content [data]="dataService.data"></tbody>
   </table>
 </div>
