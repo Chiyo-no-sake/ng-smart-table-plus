@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
 import {SmartTableDataService} from '../smart-table-data.service';
 
 type RequestData = {
@@ -14,11 +14,13 @@ type RequestData = {
 @Component({
   selector: 'app-smart-table',
   templateUrl: './smart-table.component.html',
-  styleUrls: ['./smart-table.component.css']
+  styleUrls: ['./smart-table.component.css'],
 })
 export class SmartTableComponent<T> implements OnInit {
 
-  constructor(private dataService: SmartTableDataService<T>) { }
+  constructor(private dataService: SmartTableDataService<T>) {
+  }
+
   @Input() headers: string[];
   @Input() getCellContent: (t: T, header: string) => string;
   @Input() onClick: (t: T) => void;
