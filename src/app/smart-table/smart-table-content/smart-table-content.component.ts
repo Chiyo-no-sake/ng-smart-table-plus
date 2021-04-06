@@ -14,7 +14,7 @@ export class SmartTableContentComponent<T> implements OnInit {
 
   ngOnInit(): void {
     setTimeout(() => {
-      console.log(this.dataService.data);
+      console.log(this.dataService.responseData);
     }, 5000);
   }
 

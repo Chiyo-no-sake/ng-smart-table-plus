@@ -1,16 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {SmartTableDataService} from '../services/smart-table-data.service';
+import {RequestData, ResponseData, SmartTableDataService} from '../services/smart-table-data.service';
 import {Observable} from 'rxjs';
 
-export type RequestData = {
-  sortEnabled: boolean;
-  paginationEnabled: boolean;
-  pageNumber?: number;
-  pageSize?: number;
-  sortHeaderName?: string;
-  sortOrder?: string;
-  searchQuery?: string;
-};
 
 @Component({
   selector: 'app-smart-table',
@@ -25,7 +16,8 @@ export class SmartTableComponent<T> implements OnInit {
   @Input() headers: string[];
   @Input() getCellContent: (t: T, header: string) => string;
   @Input() onClick: (t: T) => void;
-  @Input() getData: (requestData: RequestData) => Observable<T[]>;
+  @Input() getData: (requestData: RequestData) => Observable<ResponseData<T>>;
+  requestData: RequestData;
 
   private static checkInput(inputEl: any, inputName: string): void {
     if (inputEl === null) {
@@ -38,15 +30,16 @@ export class SmartTableComponent<T> implements OnInit {
     SmartTableComponent.checkInput(this.getCellContent, 'getCellContent');
     SmartTableComponent.checkInput(this.onClick, 'onClick');
     SmartTableComponent.checkInput(this.getData, 'getData');
-
-    this.getData({
-      paginationEnabled: false,
-      pageSize: 2,
+    this.requestData = {
+      paginationEnabled: true,
+      pageSize: 10,
       pageNumber: 0,
       sortEnabled: true,
       sortHeaderName: this.headers[2],
       sortOrder: 'asc'
-    }).subscribe(t => this.dataService.data = t);
+    };
+
+    this.getData(this.requestData).subscribe(t => this.dataService.responseData = t);
 
     this.dataService.headers = this.headers;
     this.dataService.getCellContent = this.getCellContent;
