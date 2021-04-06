@@ -45,4 +45,10 @@ export class SmartTableComponent<T> implements OnInit {
     this.dataService.getCellContent = this.getCellContent;
     this.dataService.onClick = this.onClick;
   }
+
+  onPageChanged(pageNumber: { pageSelected: number }): void {
+    console.log('onPageChanged: ' + pageNumber.pageSelected);
+    this.requestData.pageNumber = pageNumber.pageSelected;
+    this.getData(this.requestData).subscribe(t => this.dataService.responseData = t);
+  }
 }

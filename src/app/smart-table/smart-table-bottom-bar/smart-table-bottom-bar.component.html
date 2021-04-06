@@ -1,0 +1,14 @@
+<nav>
+  <ul class="pagination">
+    <li *ngFor="let li of generateRowIndices()"
+        [ngClass]="{active: li == requestData.pageNumber}"
+        (click)="onPageChange(li)"
+        class="page-item">
+      <a
+        class="page-link"
+        href="#">
+        {{li}}
+      </a>
+    </li>
+  </ul>
+</nav>

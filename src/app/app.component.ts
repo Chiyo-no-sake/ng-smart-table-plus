@@ -67,38 +67,38 @@ export class AppComponent implements OnInit {
         status: 'open'
       }];
 
-    return of({pagesNumber: null, data: arr, elementsNumber: arr.length} as ResponseData<Post>);
+    // return of({pagesNumber: null, data: arr, elementsNumber: arr.length} as ResponseData<Post>);
 
-  //   let query = '?';
-  //   if (requestData.sortEnabled) {
-  //     query = AppComponent.attachParam(query, 'sort', requestData.sortHeaderName.toLowerCase());
-  //     query = AppComponent.attachParam(query, 'direction', requestData.sortOrder);
-  //   }
-  //   if (requestData.paginationEnabled) {
-  //     query = AppComponent.attachParam(query, 'page', requestData.pageNumber.toString());
-  //     query = AppComponent.attachParam(query, 'size', requestData.pageSize.toString());
-  //   }
-  //
-  //   if (requestData.searchQuery) {
-  //     query = AppComponent.attachParam(query, 'search', requestData.searchQuery);
-  //   }
-  //
-  //   let request = this.postsURI;
-  //
-  //   if (query !== '?') {
-  //     request = request.concat(query);
-  //   }
-  //
-  //   if (requestData.paginationEnabled) {
-  //     return this.http.get<PostsPage>(request).pipe(
-  //       map(response => {
-  //         return {pagesNumber: response.totalPages, data: response.content, elementsNumber: response.totalElements};
-  //       }));
-  //   } else {
-  //     return this.http.get<Post[]>(request).pipe(map(array => {
-  //       return {pagesNumber: null, data: array, elementsNumber: array.length};
-  //     }));
-  //   }
+    let query = '?';
+    if (requestData.sortEnabled) {
+      query = AppComponent.attachParam(query, 'sort', requestData.sortHeaderName.toLowerCase());
+      query = AppComponent.attachParam(query, 'direction', requestData.sortOrder);
+    }
+    if (requestData.paginationEnabled) {
+      query = AppComponent.attachParam(query, 'page', requestData.pageNumber.toString());
+      query = AppComponent.attachParam(query, 'size', requestData.pageSize.toString());
+    }
+
+    if (requestData.searchQuery) {
+      query = AppComponent.attachParam(query, 'search', requestData.searchQuery);
+    }
+
+    let request = this.postsURI;
+
+    if (query !== '?') {
+      request = request.concat(query);
+    }
+
+    if (requestData.paginationEnabled) {
+      return this.http.get<PostsPage>(request).pipe(
+        map(response => {
+          return {pagesNumber: response.totalPages, data: response.content, elementsNumber: response.totalElements};
+        }));
+    } else {
+      return this.http.get<Post[]>(request).pipe(map(array => {
+        return {pagesNumber: null, data: array, elementsNumber: array.length};
+      }));
+    }
   };
 
   onClick = (p: Post): void => {

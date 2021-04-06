@@ -5,4 +5,5 @@
     </thead>
     <tbody app-smart-table-content></tbody>
   </table>
+  <app-smart-table-bottom-bar (pageChanged)="onPageChanged($event)" [requestData]="requestData"></app-smart-table-bottom-bar>
 </div>
