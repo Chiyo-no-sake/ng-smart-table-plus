@@ -1,6 +1,6 @@
-<div class="table-responsive debug">
-  <!-- <table-top-bar></table-top-bar> -->
-  <table class="table">
+<div class="container-fluid">
+  <app-smart-table-searchbar (searchSubmit)="onSearchSubmit($event)"></app-smart-table-searchbar>
+  <table class="table table-hover">
     <thead app-smart-table-heading>
     </thead>
     <tbody app-smart-table-content></tbody>
