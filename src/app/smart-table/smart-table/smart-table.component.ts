@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {SmartTableDataService} from '../services/smart-table-data.service';
 import {Observable} from 'rxjs';
 
-type RequestData = {
+export type RequestData = {
   sortEnabled: boolean;
   paginationEnabled: boolean;
   pageNumber?: number;
@@ -41,7 +41,11 @@ export class SmartTableComponent<T> implements OnInit {
 
     this.getData({
       paginationEnabled: false,
-      sortEnabled: false,
+      pageSize: 2,
+      pageNumber: 0,
+      sortEnabled: true,
+      sortHeaderName: this.headers[2],
+      sortOrder: 'asc'
     }).subscribe(t => this.dataService.data = t);
 
     this.dataService.headers = this.headers;
