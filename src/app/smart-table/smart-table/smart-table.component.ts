@@ -1,6 +1,6 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {RequestData, ResponseData, SmartTableDataService} from '../services/smart-table-data.service';
-import {Observable} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {SmartTableBottomBarComponent} from '../smart-table-bottom-bar/smart-table-bottom-bar.component';
 import {SmartTableSearchbarComponent} from '../smart-table-searchbar/smart-table-searchbar.component';
 
@@ -10,11 +10,13 @@ import {SmartTableSearchbarComponent} from '../smart-table-searchbar/smart-table
   templateUrl: './smart-table.component.html',
   styleUrls: ['./smart-table.component.css'],
 })
-export class SmartTableComponent<T> implements OnInit {
+export class SmartTableComponent<T> implements OnInit, OnDestroy {
 
   constructor(public dataService: SmartTableDataService<T>) {
   }
 
+
+  subscription: Subscription;
   @Input() headers: string[];
   @Input() getCellContent: (t: T, header: string) => string;
   @Input() onClick: (t: T) => void;
@@ -31,6 +33,10 @@ export class SmartTableComponent<T> implements OnInit {
     }
   }
 
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
   ngOnInit(): void {
     SmartTableComponent.checkInput(this.headers, 'headers');
     SmartTableComponent.checkInput(this.getCellContent, 'getCellContent');
@@ -44,8 +50,7 @@ export class SmartTableComponent<T> implements OnInit {
       sortHeaderName: this.headers[2],
       sortOrder: 'asc'
     };
-
-    this.getData(this.requestData).subscribe(t => this.dataService.responseData = t);
+    this.subscription = this.getData(this.requestData).subscribe(t => this.dataService.responseData = t);
 
     this.dataService.headers = this.headers;
     this.dataService.getCellContent = this.getCellContent;
@@ -55,7 +60,8 @@ export class SmartTableComponent<T> implements OnInit {
   onPageChanged(pageNumber: { pageSelected: number }): void {
     this.requestData.pageNumber = pageNumber.pageSelected - 1;
     this.bottomBar.loading = true;
-    this.getData(this.requestData).subscribe(t => {
+    this.subscription.unsubscribe();
+    this.subscription = this.getData(this.requestData).subscribe(t => {
       this.dataService.responseData = t;
       this.bottomBar.loading = false;
     });
@@ -65,7 +71,8 @@ export class SmartTableComponent<T> implements OnInit {
     this.requestData.pageNumber = 0;
     this.requestData.searchQuery = keywords;
     this.searchBar.loading = true;
-    this.getData(this.requestData).subscribe(
+    this.subscription.unsubscribe();
+    this.subscription = this.getData(this.requestData).subscribe(
       t => {
         this.dataService.responseData = t;
         this.searchBar.loading = false;
