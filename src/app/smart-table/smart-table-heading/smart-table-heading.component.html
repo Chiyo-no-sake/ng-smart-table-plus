@@ -1,3 +1,14 @@
 <tr>
-  <th scope="col" *ngFor="let el of tableData.headers">{{el}}</th>
+  <th scope="col" *ngFor="let el of tableData.headers" (click)="onHeaderSortRequest(el)">
+    <div class="d-flex flex-row">
+      <p class="m-0">{{el}}</p>
+      <fa-icon
+        *ngIf="!loading && headerSorted === el"
+        [icon]="direction === 'asc' ? faAngleUp : faAngleDown"
+        class="mx-2">
+      </fa-icon>
+      <span class="spinner-border spinner-border-sm mx-2" role="status" aria-hidden="true"
+            *ngIf="loading && lastClicked === el"></span>
+    </div>
+  </th>
 </tr>

@@ -1,9 +1,9 @@
-<div class="row m-2">
-  <nav>
-    <ul class="pagination">
+<nav class="d-flex flex-row align-items-center justify-content-between">
+  <div class="d-flex flex-row justify-content-start align-items-center ml-2">
+    <ul class="pagination align-self-center m-0">
       <li *ngFor="let li of generateRowIndices()"
-          [ngClass]="{active: li == requestData.pageNumber + 1}"
-          (click)="onPageChange(li)"
+          [ngClass]="{active: li === selectedPageNumber + 1, disabled: li === placeHolderString || li === placeHolderString}"
+          (click)="li !==placeHolderString && li !== placeHolderString && onPageChange(li-1)"
           class="page-item">
         <a
           class="page-link"
@@ -12,7 +12,7 @@
         </a>
       </li>
     </ul>
-  </nav>
-  <div *ngIf="loading" class="spinner-grow spinner-grow-sm ml-3 mt-md-2 text-primary">
+    <div *ngIf="loading" class="spinner-border spinner-grow-sm ml-3 text-primary">
+    </div>
   </div>
-</div>
+</nav>

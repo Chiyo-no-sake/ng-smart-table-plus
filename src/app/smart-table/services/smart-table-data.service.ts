@@ -4,7 +4,7 @@ export type RequestData = {
   pageNumber?: number;
   pageSize?: number;
   sortHeaderName?: string;
-  sortOrder?: string;
+  sortOrder?: 'asc' | 'desc';
   searchQuery?: string;
 };
 

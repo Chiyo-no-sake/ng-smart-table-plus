@@ -3,6 +3,7 @@ import {RequestData, ResponseData, SmartTableDataService} from '../services/smar
 import {Observable, Subscription} from 'rxjs';
 import {SmartTableBottomBarComponent} from '../smart-table-bottom-bar/smart-table-bottom-bar.component';
 import {SmartTableSearchbarComponent} from '../smart-table-searchbar/smart-table-searchbar.component';
+import {SmartTableHeadingComponent} from '../smart-table-heading/smart-table-heading.component';
 
 
 @Component({
@@ -11,19 +12,23 @@ import {SmartTableSearchbarComponent} from '../smart-table-searchbar/smart-table
   styleUrls: ['./smart-table.component.css'],
 })
 export class SmartTableComponent<T> implements OnInit, OnDestroy {
-
   constructor(public dataService: SmartTableDataService<T>) {
   }
 
-
   subscription: Subscription;
+
+  // mandatory
   @Input() headers: string[];
   @Input() getCellContent: (t: T, header: string) => string;
   @Input() onClick: (t: T) => void;
   @Input() getData: (requestData: RequestData) => Observable<ResponseData<T>>;
 
+  // optionals
+  @Input() maxInactivePagesListed = 1;
+
   @ViewChild(SmartTableBottomBarComponent) bottomBar: SmartTableBottomBarComponent<T>;
   @ViewChild(SmartTableSearchbarComponent) searchBar: SmartTableSearchbarComponent;
+  @ViewChild(SmartTableHeadingComponent) headings: SmartTableHeadingComponent<T>;
 
   requestData: RequestData;
 
@@ -57,8 +62,8 @@ export class SmartTableComponent<T> implements OnInit, OnDestroy {
     this.dataService.onClick = this.onClick;
   }
 
-  onPageChanged(pageNumber: { pageSelected: number }): void {
-    this.requestData.pageNumber = pageNumber.pageSelected - 1;
+  onPageChanged(pageSelected: number): void {
+    this.requestData.pageNumber = pageSelected;
     this.bottomBar.loading = true;
     this.subscription.unsubscribe();
     this.subscription = this.getData(this.requestData).subscribe(t => {
@@ -79,4 +84,26 @@ export class SmartTableComponent<T> implements OnInit, OnDestroy {
       }
     );
   }
+
+  onHeaderSortChanged(headerChange: { header: string, direction: 'asc' | 'desc' | 'no-sort' }): void {
+    this.headings.loading = true;
+    if (headerChange.direction === 'no-sort') {
+      this.requestData.sortEnabled = false;
+      this.requestData.sortOrder = null;
+      this.requestData.sortHeaderName = null;
+    }else{
+      this.requestData.sortEnabled = true;
+      this.requestData.sortOrder = headerChange.direction;
+      this.requestData.sortHeaderName = headerChange.header;
+    }
+    this.subscription.unsubscribe();
+
+    this.subscription = this.getData(this.requestData).subscribe(
+      t => {
+        this.dataService.responseData = t;
+        this.headings.loading = false;
+      }
+    );
+  }
+
 }
