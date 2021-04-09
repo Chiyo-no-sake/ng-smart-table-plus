@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {RequestData, ResponseData} from './smart-table/services/smart-table-data.service';
 import {map} from 'rxjs/operators';
-import {Observable, of} from 'rxjs';
+import {Observable} from 'rxjs';
 
 type Post = {
   id: string;
@@ -51,7 +51,7 @@ export class AppComponent implements OnInit {
 
   getCellContent = (post: Post, header: string): string => {
     return post[header.toLowerCase()];
-  };
+  }
 
   getData = (requestData: RequestData): Observable<ResponseData<Post>> => {
     // const arr: Post[] = [{
@@ -99,11 +99,11 @@ export class AppComponent implements OnInit {
         return {pagesNumber: null, data: array, elementsNumber: array.length};
       }));
     }
-  };
+  }
 
   onClick = (p: Post): void => {
     console.log(`Clicked: ${p.id}`);
-  };
+  }
 
   ngOnInit(): void {
   }

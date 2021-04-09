@@ -24,7 +24,7 @@ export class SmartTableComponent<T> implements OnInit, OnDestroy {
   @Input() getData: (requestData: RequestData) => Observable<ResponseData<T>>;
 
   // optionals
-  @Input() maxInactivePagesListed = 1;
+  @Input() maxInactiveSidePages = 1;
 
   @ViewChild(SmartTableBottomBarComponent) bottomBar: SmartTableBottomBarComponent<T>;
   @ViewChild(SmartTableSearchbarComponent) searchBar: SmartTableSearchbarComponent;

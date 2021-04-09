@@ -1,11 +1,16 @@
-<h1>This is the app component</h1>
-<hr>
-<app-smart-table
-  [getCellContent]="getCellContent"
-  [headers]="headers"
-  [getData]="getData"
-  [onClick]="onClick">
-
-  <ng-template #headerTemplate></ng-template>
-  <ng-template #iconTemplate></ng-template>
-</app-smart-table>
+<div class="d-flex flex-row justify-content-center">
+  <div class="col-xl-7 col-lg-8 colcol-md-9 pt-5">
+    <h1 class="text-dark text-center">Smart Table</h1>
+    <h4 class="text-primary text-center">Showcase</h4>
+    <br>
+    <app-smart-table
+      [getCellContent]="getCellContent"
+      [headers]="headers"
+      [getData]="getData"
+      [onClick]="onClick"
+      [maxInactiveSidePages]="2"
+      class="card p-2"
+    >
+    </app-smart-table>
+  </div>
+</div>
