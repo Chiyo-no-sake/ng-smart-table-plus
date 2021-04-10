@@ -5,7 +5,8 @@
     </thead>
     <tbody app-smart-table-content></tbody>
   </table>
-  <app-smart-table-bottom-bar *ngIf="paginationEnabled" (pageChanged)="onPageChanged($event)" [requestData]="requestData"
+  <app-smart-table-bottom-bar *ngIf="paginationEnabled" (pageChanged)="onPageChanged($event)"
+                              (rowsPerPageChanged)="onRowsPerPageChanged($event)" [requestData]="requestData"
                               [maxShownForSide]="maxInactiveSidePages"
   ></app-smart-table-bottom-bar>
 </div>

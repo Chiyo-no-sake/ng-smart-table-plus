@@ -100,6 +100,16 @@ export class SmartTableComponent<T> implements OnInit, OnDestroy, AfterViewInit 
     });
   }
 
+  onRowsPerPageChanged(rowsPerPage: number): void {
+    this.requestData.pageSize = rowsPerPage;
+    this.bottomBar.loading = true;
+    this.subscription.unsubscribe();
+    this.subscription = this.getData(this.requestData).subscribe(t => {
+      this.dataService.responseData = t;
+      this.bottomBar.loading = false;
+    });
+  }
+
   onSearchSubmit(keywords: string): void {
     this.requestData.pageNumber = 0;
     this.requestData.searchQuery = keywords;

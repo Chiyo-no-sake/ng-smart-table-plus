@@ -10,6 +10,8 @@ export class SmartTableBottomBarComponent<T> implements OnInit {
   @Input() requestData: RequestData;
   @Input() maxShownForSide = 1;
   @Output() pageChanged = new EventEmitter<number>();
+  @Output() rowsPerPageChanged = new EventEmitter<number>();
+
   loading = false;
   selectedPageNumber = 0;
   placeHolderString = '-';
@@ -47,6 +49,11 @@ export class SmartTableBottomBarComponent<T> implements OnInit {
     }
 
     return indices;
+  }
+
+  onRowsPerPageChange(rowsPerPage: string): void{
+    // tslint:disable-next-line:radix
+    this.rowsPerPageChanged.emit(parseInt(rowsPerPage));
   }
 
   onPageChange(pageNumber: number): void {
