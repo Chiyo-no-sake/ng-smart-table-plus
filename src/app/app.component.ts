@@ -28,6 +28,14 @@ type PostsPage = {
   totalPages: number;
 };
 
+type ImageResponse = {
+  albumId: number;
+  id: number;
+  title: string;
+  url: string;
+  thumbnailUrl: string;
+};
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -38,8 +46,11 @@ export class AppComponent implements OnInit {
   }
 
   title = 'smart-table-component-example';
-  headers = ['Title', 'Description', 'Price'];
+  table1headers = ['Title', 'Description', 'Price'];
   postsURI = 'http://isin03.dti.supsi.ch:81/template/bff/items';
+
+  table2headers = ['Icon', 'Title', 'URL'];
+  imagesURI = 'https://jsonplaceholder.typicode.com/photos';
 
   private static attachParam(str: string, param: string, value: string): string {
     if (!(str.endsWith('&') || str.endsWith('?'))) {
@@ -49,26 +60,11 @@ export class AppComponent implements OnInit {
     return str.concat(param, '=', value);
   }
 
-  getCellContent = (post: Post, header: string): string => {
+  getCellContentTable1 = (post: Post | ImageResponse, header: string): string => {
     return post[header.toLowerCase()];
-  }
+  };
 
-  getData = (requestData: RequestData): Observable<ResponseData<Post>> => {
-    // const arr: Post[] = [{
-    //     title: 'Test',
-    //     description: 'TestDesc',
-    //     price: 300,
-    //     id: '1',
-    //     date: '1',
-    //     category: 'stuff',
-    //     author: 'mario',
-    //     type: 'sex',
-    //     location: 'culo',
-    //     status: 'open'
-    //   }];
-    //
-    // return of({pagesNumber: null, data: arr, elementsNumber: arr.length} as ResponseData<Post>);
-
+  getTable1Data = (requestData: RequestData): Observable<ResponseData<Post>> => {
     let query = '?';
     if (requestData.sortEnabled) {
       query = AppComponent.attachParam(query, 'sort', requestData.sortHeaderName.toLowerCase());
@@ -99,11 +95,22 @@ export class AppComponent implements OnInit {
         return {pagesNumber: null, data: array, elementsNumber: array.length};
       }));
     }
-  }
+  };
 
-  onClick = (p: Post): void => {
-    console.log(`Clicked: ${p.id}`);
-  }
+  onClickTable1 = (p: Post): void => {
+    alert('Clicked post: ' + p.title);
+  };
+
+  onClickTable2 = (e: ImageResponse): void => {
+    alert('Clicked: ' + e.title);
+  };
+
+  getTable2Data = (requestData: RequestData): Observable<ResponseData<ImageResponse>> => {
+    return this.http.get<ImageResponse[]>(this.imagesURI)
+               .pipe(map((array) => {
+                 return {pagesNumber: 1, elementsNumber: 10, data: array.slice(0, 10)};
+               }));
+  };
 
   ngOnInit(): void {
   }

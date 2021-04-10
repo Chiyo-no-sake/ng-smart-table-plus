@@ -1,17 +1,19 @@
-import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ContentChildren, Input, OnDestroy, OnInit, QueryList, TemplateRef, ViewChild} from '@angular/core';
 import {RequestData, ResponseData, SmartTableDataService} from '../services/smart-table-data.service';
 import {Observable, Subscription} from 'rxjs';
 import {SmartTableBottomBarComponent} from '../smart-table-bottom-bar/smart-table-bottom-bar.component';
 import {SmartTableSearchbarComponent} from '../smart-table-searchbar/smart-table-searchbar.component';
 import {SmartTableHeadingComponent} from '../smart-table-heading/smart-table-heading.component';
+import {SmartTableTemplateDirective} from '../smart-table-template.directive';
 
 
 @Component({
   selector: 'app-smart-table',
   templateUrl: './smart-table.component.html',
   styleUrls: ['./smart-table.component.css'],
+  providers: [SmartTableDataService]
 })
-export class SmartTableComponent<T> implements OnInit, OnDestroy {
+export class SmartTableComponent<T> implements OnInit, OnDestroy, AfterViewInit {
   constructor(public dataService: SmartTableDataService<T>) {
   }
 
@@ -19,6 +21,9 @@ export class SmartTableComponent<T> implements OnInit, OnDestroy {
 
   // mandatory
   @Input() headers: string[];
+  @Input() sortEnabled = false;
+  @Input() paginationEnabled = false;
+  @Input() searchEnabled = false;
   @Input() getCellContent: (t: T, header: string) => string;
   @Input() onClick: (t: T) => void;
   @Input() getData: (requestData: RequestData) => Observable<ResponseData<T>>;
@@ -30,12 +35,24 @@ export class SmartTableComponent<T> implements OnInit, OnDestroy {
   @ViewChild(SmartTableSearchbarComponent) searchBar: SmartTableSearchbarComponent;
   @ViewChild(SmartTableHeadingComponent) headings: SmartTableHeadingComponent<T>;
 
+  @ContentChildren(SmartTableTemplateDirective) columnTemplates: QueryList<SmartTableTemplateDirective>;
+
   requestData: RequestData;
 
   private static checkInput(inputEl: any, inputName: string): void {
     if (inputEl === null) {
       throw new Error(`Attribute ${inputName} is required`);
     }
+  }
+
+  private getTemplateFor = (headerName: string): TemplateRef<SmartTableTemplateDirective> => {
+    for (const dir of this.columnTemplates.toArray()) {
+      if (dir.columnName === headerName) {
+        return dir.templateRef;
+      }
+    }
+
+    return null;
   }
 
   ngOnDestroy(): void {
@@ -60,6 +77,17 @@ export class SmartTableComponent<T> implements OnInit, OnDestroy {
     this.dataService.headers = this.headers;
     this.dataService.getCellContent = this.getCellContent;
     this.dataService.onClick = this.onClick;
+    this.dataService.searchEnabled = this.searchEnabled;
+    this.dataService.paginationEnabled = this.paginationEnabled;
+    this.dataService.sortEnabled = this.sortEnabled;
+  }
+
+  ngAfterViewInit(): void {
+    for (const header of this.headers) {
+      this.dataService.headerTemplates[header] = this.getTemplateFor(header);
+    }
+
+    console.log('template Refs: ', this.dataService.headerTemplates);
   }
 
   onPageChanged(pageSelected: number): void {
@@ -91,7 +119,7 @@ export class SmartTableComponent<T> implements OnInit, OnDestroy {
       this.requestData.sortEnabled = false;
       this.requestData.sortOrder = null;
       this.requestData.sortHeaderName = null;
-    }else{
+    } else {
       this.requestData.sortEnabled = true;
       this.requestData.sortOrder = headerChange.direction;
       this.requestData.sortHeaderName = headerChange.header;

@@ -1,5 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit, TemplateRef} from '@angular/core';
 import {SmartTableDataService} from '../services/smart-table-data.service';
+import {SmartTableTemplateDirective} from '../smart-table-template.directive';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -7,7 +8,8 @@ import {SmartTableDataService} from '../services/smart-table-data.service';
   templateUrl: './smart-table-content.component.html',
   styleUrls: ['./smart-table-content.component.css']
 })
-export class SmartTableContentComponent<T> implements OnInit {
+export class SmartTableContentComponent<T> implements OnInit, AfterViewInit{
+  templateRefs: {[key: string]: TemplateRef<SmartTableTemplateDirective>} = {};
 
   constructor(public dataService: SmartTableDataService<T>) {
   }
@@ -18,5 +20,8 @@ export class SmartTableContentComponent<T> implements OnInit {
     }, 5000);
   }
 
+  ngAfterViewInit(): void {
+    this.templateRefs = this.dataService.headerTemplates;
+  }
 
 }

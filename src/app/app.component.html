@@ -3,14 +3,41 @@
     <h1 class="text-dark text-center">Smart Table</h1>
     <h4 class="text-primary text-center">Showcase</h4>
     <br>
+    <h4 class="text-dark text-center"> Use Case 1: Remote post array </h4>
     <app-smart-table
-      [getCellContent]="getCellContent"
-      [headers]="headers"
-      [getData]="getData"
-      [onClick]="onClick"
+      [getCellContent]="getCellContentTable1"
+      [headers]="table1headers"
+      [getData]="getTable1Data"
+      [onClick]="onClickTable1"
       [maxInactiveSidePages]="2"
+      sortEnabled="true"
+      paginationEnabled="true"
+      searchEnabled="true"
       class="card py-3"
     >
+      <ng-template appTableColTemplate [columnName]="'Title'" let-data='data'>
+        <b>{{data.title}}</b>
+      </ng-template>
+
+      <ng-template appTableColTemplate [columnName]="'Price'" let-data='data'>
+        <p>${{data.price}}</p>
+      </ng-template>
+
+    </app-smart-table>
+
+    <br class="mt-5">
+    <h4 class="text-dark text-center"> Use Case 2: Remote albums array + img </h4>
+
+    <app-smart-table
+      [getCellContent]="getCellContentTable1"
+      [headers]="table2headers"
+      [getData]="getTable2Data"
+      [onClick]="onClickTable2"
+      [maxInactiveSidePages]="1"
+      class="card py-3">
+      <ng-template appTableColTemplate [columnName]="'Icon'" let-data='data'>
+        <img class="img-fluid" [src]="data.thumbnailUrl" alt="Icon-URL"/>
+      </ng-template>
     </app-smart-table>
   </div>
 </div>

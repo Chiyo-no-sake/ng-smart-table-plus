@@ -1,3 +1,11 @@
 <tr (click)="dataService.onClick(element)" *ngFor="let element of dataService.responseData.data">
-  <td *ngFor="let header of dataService.headers">{{dataService.getCellContent(element, header)}}</td>
+  <td *ngFor="let header of dataService.headers">
+    <p *ngIf="templateRefs[header] === null; else templateDefined">
+      {{dataService.getCellContent(element, header)}}
+    </p>
+
+    <ng-template #templateDefined [ngTemplateOutlet]="templateRefs[header]"
+                 [ngTemplateOutletContext]="{data: element}"></ng-template>
+
+  </td>
 </tr>
