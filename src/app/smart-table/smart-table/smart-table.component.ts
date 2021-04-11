@@ -101,6 +101,7 @@ export class SmartTableComponent<T> implements OnInit, OnDestroy, AfterViewInit 
   }
 
   onRowsPerPageChanged(rowsPerPage: number): void {
+    this.requestData.pageNumber = 0;
     this.requestData.pageSize = rowsPerPage;
     this.bottomBar.loading = true;
     this.subscription.unsubscribe();

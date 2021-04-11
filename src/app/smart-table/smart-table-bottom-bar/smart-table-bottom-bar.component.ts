@@ -52,6 +52,7 @@ export class SmartTableBottomBarComponent<T> implements OnInit {
   }
 
   onRowsPerPageChange(rowsPerPage: string): void{
+    this.selectedPageNumber = 0;
     // tslint:disable-next-line:radix
     this.rowsPerPageChanged.emit(parseInt(rowsPerPage));
   }
