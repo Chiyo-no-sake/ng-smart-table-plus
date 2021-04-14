@@ -1,0 +1,12 @@
+<div class="container-fluid">
+  <app-smart-table-searchbar *ngIf="dataService.searchEnabled" (searchSubmit)="onSearchSubmit($event)"></app-smart-table-searchbar>
+  <table class="table table-hover mt-2">
+    <thead app-smart-table-heading (headerSortChanged)="onHeaderSortChanged($event)">
+    </thead>
+    <tbody app-smart-table-content></tbody>
+  </table>
+  <app-smart-table-bottom-bar *ngIf="dataService.paginationEnabled" (pageChanged)="onPageChanged($event)"
+                              (rowsPerPageChanged)="onRowsPerPageChanged($event)" [requestData]="requestData"
+                              [maxShownForSide]="dataService.maxInactiveSidePages"
+  ></app-smart-table-bottom-bar>
+</div>

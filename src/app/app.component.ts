@@ -45,8 +45,15 @@ export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {
   }
 
+  localArray1 = [{title: 'ciccio', description: 'merda'},
+    {title: 'pippo', description: 'coca'}, {
+      title: 'io',
+      description: 'mi dissocio'
+    }];
+  table3headers = ['Title', 'Description'];
+
   title = 'smart-table-component-example';
-  table1headers = ['Title', 'Description', 'Price'];
+  table1headers = ['Title', 'Price'];
   postsURI = 'http://isin03.dti.supsi.ch:81/template/bff/items';
 
   table2headers = ['Icon', 'Title', 'URL'];
@@ -61,6 +68,10 @@ export class AppComponent implements OnInit {
   }
 
   getCellContentTable1 = (post: Post | ImageResponse, header: string): string => {
+    return post[header.toLowerCase()];
+  };
+
+  getCellContentTable3 = (post: { title: string, description: string }, header: string): string => {
     return post[header.toLowerCase()];
   };
 
@@ -97,6 +108,7 @@ export class AppComponent implements OnInit {
     }
   };
 
+
   onClickTable1 = (p: Post): void => {
     alert('Clicked post: ' + p.title);
   };
@@ -105,11 +117,15 @@ export class AppComponent implements OnInit {
     alert('Clicked: ' + e.title);
   };
 
+  onClickTable3 = (e: { title: string, description: string }): void => {
+    alert('Clicked: ' + e.title);
+  };
+
   getTable2Data = (requestData: RequestData): Observable<ResponseData<ImageResponse>> => {
     return this.http.get<ImageResponse[]>(this.imagesURI)
-               .pipe(map((array) => {
-                 return {pagesNumber: 1, elementsNumber: 10, data: array.slice(0, 10)};
-               }));
+      .pipe(map((array) => {
+        return {pagesNumber: 1, elementsNumber: 10, data: array.slice(0, 10)};
+      }));
   };
 
   ngOnInit(): void {

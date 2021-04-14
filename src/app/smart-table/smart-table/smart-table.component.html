@@ -1,12 +1,7 @@
-<div class="container-fluid">
-  <app-smart-table-searchbar *ngIf="searchEnabled" (searchSubmit)="onSearchSubmit($event)"></app-smart-table-searchbar>
-  <table class="table table-hover mt-2">
-    <thead app-smart-table-heading (headerSortChanged)="onHeaderSortChanged($event)">
-    </thead>
-    <tbody app-smart-table-content></tbody>
-  </table>
-  <app-smart-table-bottom-bar *ngIf="paginationEnabled" (pageChanged)="onPageChanged($event)"
-                              (rowsPerPageChanged)="onRowsPerPageChanged($event)" [requestData]="requestData"
-                              [maxShownForSide]="maxInactiveSidePages"
-  ></app-smart-table-bottom-bar>
-</div>
+<app-remote-table *ngIf="!localTable; else templateRef" [getData]="getData" [requestData]="requestData">
+
+</app-remote-table>
+
+<ng-template #templateRef>
+  <app-local-table [requestData]="requestData" [localArray]="localArray"></app-local-table>
+</ng-template>

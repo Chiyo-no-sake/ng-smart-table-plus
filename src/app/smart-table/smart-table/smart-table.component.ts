@@ -18,6 +18,7 @@ export class SmartTableComponent<T> implements OnInit, OnDestroy, AfterViewInit 
   }
 
   subscription: Subscription;
+  localTable: boolean;
 
   // mandatory
   @Input() headers: string[];
@@ -26,7 +27,8 @@ export class SmartTableComponent<T> implements OnInit, OnDestroy, AfterViewInit 
   @Input() searchEnabled = false;
   @Input() getCellContent: (t: T, header: string) => string;
   @Input() onClick: (t: T) => void;
-  @Input() getData: (requestData: RequestData) => Observable<ResponseData<T>>;
+  @Input() getData?: (requestData: RequestData) => Observable<ResponseData<T>>;
+  @Input() localArray?: T[];
 
   // optionals
   @Input() maxInactiveSidePages = 1;
@@ -53,7 +55,7 @@ export class SmartTableComponent<T> implements OnInit, OnDestroy, AfterViewInit 
     }
 
     return null;
-  }
+  };
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
@@ -63,16 +65,22 @@ export class SmartTableComponent<T> implements OnInit, OnDestroy, AfterViewInit 
     SmartTableComponent.checkInput(this.headers, 'headers');
     SmartTableComponent.checkInput(this.getCellContent, 'getCellContent');
     SmartTableComponent.checkInput(this.onClick, 'onClick');
-    SmartTableComponent.checkInput(this.getData, 'getData');
+    if (this.localArray === undefined) {
+      SmartTableComponent.checkInput(this.getData, 'getData');
+      this.localTable = false;
+    }
+    if (this.getData === undefined) {
+      SmartTableComponent.checkInput(this.localArray, 'localArray');
+      this.localTable = true;
+    }
     this.requestData = {
       paginationEnabled: true,
       pageSize: 5,
       pageNumber: 0,
       sortEnabled: true,
-      sortHeaderName: this.headers[2],
+      sortHeaderName: this.headers[0],
       sortOrder: 'asc'
     };
-    this.subscription = this.getData(this.requestData).subscribe(t => this.dataService.responseData = t);
 
     this.dataService.headers = this.headers;
     this.dataService.getCellContent = this.getCellContent;
@@ -89,60 +97,4 @@ export class SmartTableComponent<T> implements OnInit, OnDestroy, AfterViewInit 
 
     console.log('template Refs: ', this.dataService.headerTemplates);
   }
-
-  onPageChanged(pageSelected: number): void {
-    this.requestData.pageNumber = pageSelected;
-    this.bottomBar.loading = true;
-    this.subscription.unsubscribe();
-    this.subscription = this.getData(this.requestData).subscribe(t => {
-      this.dataService.responseData = t;
-      this.bottomBar.loading = false;
-    });
-  }
-
-  onRowsPerPageChanged(rowsPerPage: number): void {
-    this.requestData.pageNumber = 0;
-    this.requestData.pageSize = rowsPerPage;
-    this.bottomBar.loading = true;
-    this.subscription.unsubscribe();
-    this.subscription = this.getData(this.requestData).subscribe(t => {
-      this.dataService.responseData = t;
-      this.bottomBar.loading = false;
-    });
-  }
-
-  onSearchSubmit(keywords: string): void {
-    this.requestData.pageNumber = 0;
-    this.requestData.searchQuery = keywords;
-    this.searchBar.loading = true;
-    this.subscription.unsubscribe();
-    this.subscription = this.getData(this.requestData).subscribe(
-      t => {
-        this.dataService.responseData = t;
-        this.searchBar.loading = false;
-      }
-    );
-  }
-
-  onHeaderSortChanged(headerChange: { header: string, direction: 'asc' | 'desc' | 'no-sort' }): void {
-    this.headings.loading = true;
-    if (headerChange.direction === 'no-sort') {
-      this.requestData.sortEnabled = false;
-      this.requestData.sortOrder = null;
-      this.requestData.sortHeaderName = null;
-    } else {
-      this.requestData.sortEnabled = true;
-      this.requestData.sortOrder = headerChange.direction;
-      this.requestData.sortHeaderName = headerChange.header;
-    }
-    this.subscription.unsubscribe();
-
-    this.subscription = this.getData(this.requestData).subscribe(
-      t => {
-        this.dataService.responseData = t;
-        this.headings.loading = false;
-      }
-    );
-  }
-
 }

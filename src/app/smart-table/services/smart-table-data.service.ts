@@ -26,6 +26,8 @@ export class SmartTableDataService<T> {
   paginationEnabled = false;
   searchEnabled = false;
   responseData: ResponseData<T> = {pagesNumber: 0, data: []};
+  maxInactiveSidePages = 1;
 
-  constructor() { }
+  constructor() {
+  }
 }

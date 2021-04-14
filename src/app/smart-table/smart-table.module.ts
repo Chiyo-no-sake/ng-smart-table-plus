@@ -8,6 +8,8 @@ import {SmartTableSearchbarComponent} from './smart-table-searchbar/smart-table-
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {FormsModule} from '@angular/forms';
 import { SmartTableTemplateDirective } from './smart-table-template.directive';
+import { RemoteTableComponent } from './remote-table/remote-table.component';
+import { LocalTableComponent } from './local-table/local-table.component';
 
 @NgModule({
   declarations: [SmartTableComponent,
@@ -15,7 +17,9 @@ import { SmartTableTemplateDirective } from './smart-table-template.directive';
                  SmartTableContentComponent,
                  SmartTableSearchbarComponent,
                  SmartTableBottomBarComponent,
-                 SmartTableTemplateDirective],
+                 SmartTableTemplateDirective,
+                 RemoteTableComponent,
+                 LocalTableComponent],
   imports: [
     CommonModule,
     FontAwesomeModule,
