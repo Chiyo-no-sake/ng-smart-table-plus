@@ -12,7 +12,7 @@ import {SmartTableTemplateDirective} from '../smart-table-template.directive';
   templateUrl: './local-table.component.html',
   styleUrls: ['./local-table.component.css'],
 })
-export class LocalTableComponent<T> implements OnInit, OnDestroy{
+export class LocalTableComponent<T> implements OnInit, OnDestroy {
   constructor(public dataService: SmartTableDataService<T>) {
   }
 
@@ -35,18 +35,17 @@ export class LocalTableComponent<T> implements OnInit, OnDestroy{
   //   return null;
   // }
 
-  private sort(sortOrder: 'asc' | 'desc' | 'no-sort'): void {
+  private sort(sortOrder: 'asc' | 'desc' | 'no-sort', array: T[]): T[] {
     if (sortOrder === 'asc') {
-      this.localArray.sort((a, b) =>
+      return array.sort((a, b) =>
         this.dataService.getCellContent(a, this.requestData.sortHeaderName).localeCompare(
           this.dataService.getCellContent(b, this.requestData.sortHeaderName)));
     } else if (sortOrder === 'desc') {
-      this.localArray.sort((a, b) =>
+      return array.sort((a, b) =>
         this.dataService.getCellContent(b, this.requestData.sortHeaderName).localeCompare(
           this.dataService.getCellContent(a, this.requestData.sortHeaderName)));
     } else {
-      // TODO 'no-sort'
-      return null;
+      return array;
     }
   }
 
@@ -71,7 +70,46 @@ export class LocalTableComponent<T> implements OnInit, OnDestroy{
   }
 
   computeElements(): void {
-    // setta responseData in base a requestData
+    let result = this.dataService.responseData.data;
+    let elementsNumber = this.dataService.responseData.elementsNumber;
+    let pagesNumber = this.dataService.responseData.pagesNumber;
+
+    if (this.requestData.searchQuery !== undefined && this.requestData.searchQuery.length !== 0) {
+      result = [...this.localArray.filter((value, index) => {
+        const contents = [];
+        this.dataService.headers.forEach((e) => {
+          contents.push(this.dataService.getCellContent(value, e));
+        });
+        let found = false;
+        contents.forEach((e) => {
+          if (e.toLowerCase().includes(this.requestData.searchQuery.toLowerCase())) {
+            found = true;
+          }
+        });
+        return found;
+      })];
+      elementsNumber = result.length;
+    } else {
+      result = [...this.localArray];
+      elementsNumber = this.localArray.length;
+      setTimeout(() => {
+        console.log('local Array:' + this.localArray);
+      }, 600);
+    }
+
+    if (this.dataService.sortEnabled) {
+      result = this.sort(this.requestData.sortOrder, result);
+    }
+
+    if (this.dataService.paginationEnabled) {
+      const elementsPerPage = this.requestData.pageSize;
+      const selectedPage = this.requestData.pageNumber;
+      console.log('selectedPage:' + selectedPage);
+      result = result.slice((elementsPerPage * selectedPage), (elementsPerPage * (selectedPage + 1)));
+      pagesNumber = Math.ceil(elementsNumber / elementsPerPage);
+    }
+
+    this.dataService.responseData = {elementsNumber, pagesNumber, data: result};
   }
 
   onPageChanged(pageSelected: number): void {

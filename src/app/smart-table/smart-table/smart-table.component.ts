@@ -54,7 +54,7 @@ export class SmartTableComponent<T> implements OnInit, OnDestroy, AfterViewInit 
       }
     }
 
-    return null;
+    return undefined;
   };
 
   ngOnDestroy(): void {
