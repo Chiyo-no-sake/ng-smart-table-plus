@@ -42,7 +42,14 @@
     <br class="mt-5">
     <h4 class="text-dark text-center"> Use Case 3: Local objects array</h4>
 
-
+    <app-smart-table
+      [getCellContent]="getCellContentTable3"
+      [headers]="table3headers"
+      [localArray]="localArray1"
+      [onClick]="onClickTable3"
+      [maxInactiveSidePages]="1"
+      class="card py-3">
+    </app-smart-table>
 
   </div>
 </div>

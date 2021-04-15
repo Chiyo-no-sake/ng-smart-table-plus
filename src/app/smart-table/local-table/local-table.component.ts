@@ -11,7 +11,6 @@ import {SmartTableTemplateDirective} from '../smart-table-template.directive';
   selector: 'app-local-table',
   templateUrl: './local-table.component.html',
   styleUrls: ['./local-table.component.css'],
-  providers: [SmartTableDataService]
 })
 export class LocalTableComponent<T> implements OnInit, OnDestroy{
   constructor(public dataService: SmartTableDataService<T>) {
@@ -36,15 +35,18 @@ export class LocalTableComponent<T> implements OnInit, OnDestroy{
   //   return null;
   // }
 
-  private sort(): void {
-    if (this.requestData.sortOrder === 'asc') {
+  private sort(sortOrder: 'asc' | 'desc' | 'no-sort'): void {
+    if (sortOrder === 'asc') {
       this.localArray.sort((a, b) =>
         this.dataService.getCellContent(a, this.requestData.sortHeaderName).localeCompare(
           this.dataService.getCellContent(b, this.requestData.sortHeaderName)));
-    } else {
+    } else if (sortOrder === 'desc') {
       this.localArray.sort((a, b) =>
         this.dataService.getCellContent(b, this.requestData.sortHeaderName).localeCompare(
           this.dataService.getCellContent(a, this.requestData.sortHeaderName)));
+    } else {
+      // TODO 'no-sort'
+      return null;
     }
   }
 
@@ -60,14 +62,22 @@ export class LocalTableComponent<T> implements OnInit, OnDestroy{
       sortHeaderName: this.dataService.headers[2],
       sortOrder: 'asc'
     };
+
+    this.dataService.responseData = {
+      elementsNumber: this.localArray.length,
+      pagesNumber: 1,
+      data: this.localArray,
+    };
+  }
+
+  computeElements(): void {
+    // setta responseData in base a requestData
   }
 
   onPageChanged(pageSelected: number): void {
     this.requestData.pageNumber = pageSelected;
     this.bottomBar.loading = true;
-    // TODO: change page && re-display items
-    // this.dataService.responseData.pagesNumber;
-    // this.dataService.responseData.elementsNumber;
+    this.computeElements();
     this.bottomBar.loading = false;
   }
 
@@ -75,7 +85,7 @@ export class LocalTableComponent<T> implements OnInit, OnDestroy{
     this.requestData.pageNumber = 0;
     this.requestData.pageSize = rowsPerPage;
     this.bottomBar.loading = true;
-    // TODO: onPageChanged
+    this.computeElements();
     this.bottomBar.loading = false;
   }
 
@@ -83,7 +93,7 @@ export class LocalTableComponent<T> implements OnInit, OnDestroy{
     this.requestData.pageNumber = 0;
     this.requestData.searchQuery = keywords;
     this.searchBar.loading = true;
-    // TODO: onSearch
+    this.computeElements();
     this.searchBar.loading = false;
   }
 
@@ -97,7 +107,7 @@ export class LocalTableComponent<T> implements OnInit, OnDestroy{
       this.requestData.sortEnabled = true;
       this.requestData.sortOrder = headerChange.direction;
       this.requestData.sortHeaderName = headerChange.header;
-      this.sort();
+      this.computeElements();
     }
     this.headings.loading = false;
   }

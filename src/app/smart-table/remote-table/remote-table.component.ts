@@ -11,7 +11,6 @@ import {SmartTableTemplateDirective} from '../smart-table-template.directive';
   selector: 'app-remote-table',
   templateUrl: './remote-table.component.html',
   styleUrls: ['./remote-table.component.css'],
-  providers: [SmartTableDataService]
 })
 export class RemoteTableComponent<T> implements OnInit, OnDestroy{
   constructor(public dataService: SmartTableDataService<T>) {
@@ -25,18 +24,6 @@ export class RemoteTableComponent<T> implements OnInit, OnDestroy{
   @ViewChild(SmartTableBottomBarComponent) bottomBar: SmartTableBottomBarComponent<T>;
   @ViewChild(SmartTableSearchbarComponent) searchBar: SmartTableSearchbarComponent;
   @ViewChild(SmartTableHeadingComponent) headings: SmartTableHeadingComponent<T>;
-
-  // @ContentChildren(SmartTableTemplateDirective) columnTemplates: QueryList<SmartTableTemplateDirective>;
-
-  // private getTemplateFor = (headerName: string): TemplateRef<SmartTableTemplateDirective> => {
-  //   for (const dir of this.columnTemplates.toArray()) {
-  //     if (dir.columnName === headerName) {
-  //       return dir.templateRef;
-  //     }
-  //   }
-  //
-  //   return null;
-  // };
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
