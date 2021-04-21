@@ -9,7 +9,7 @@ import {SmartTableTemplateDirective} from '../smart-table-template.directive';
 
 @Component({
   selector: 'app-remote-table',
-  templateUrl: './remote-table.component.html',
+  templateUrl: '../table-template.component.html',
   styleUrls: ['./remote-table.component.css'],
 })
 export class RemoteTableComponent<T> implements OnInit, OnDestroy{

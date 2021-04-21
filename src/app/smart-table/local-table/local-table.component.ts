@@ -9,7 +9,7 @@ import {SmartTableTemplateDirective} from '../smart-table-template.directive';
 
 @Component({
   selector: 'app-local-table',
-  templateUrl: './local-table.component.html',
+  templateUrl: '../table-template.component.html',
   styleUrls: ['./local-table.component.css'],
 })
 export class LocalTableComponent<T> implements OnInit, OnDestroy {

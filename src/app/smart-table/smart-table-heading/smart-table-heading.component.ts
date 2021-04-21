@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, TemplateRef} from '@angular/core';
 import {SmartTableDataService} from '../services/smart-table-data.service';
 import {faAngleDown, faAngleUp} from '@fortawesome/free-solid-svg-icons';
 
@@ -12,6 +12,7 @@ type directionType = 'no-sort' | 'asc' | 'desc';
 })
 export class SmartTableHeadingComponent<T> implements OnInit {
   @Output() headerSortChanged = new EventEmitter<{ header: string, direction: directionType }>();
+  @Input() searchBar: TemplateRef<any>;
 
   faAngleUp = faAngleUp;
   faAngleDown = faAngleDown;

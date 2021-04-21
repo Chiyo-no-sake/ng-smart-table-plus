@@ -13,7 +13,6 @@
       sortEnabled="true"
       paginationEnabled="true"
       searchEnabled="true"
-      class="card py-3"
     >
       <ng-template appTableColTemplate [columnName]="'Title'" let-data='data'>
         <b>{{data.title}}</b>
@@ -32,8 +31,7 @@
       [headers]="table2headers"
       [getData]="getTable2Data"
       [onClick]="onClickTable2"
-      [maxInactiveSidePages]="1"
-      class="card py-3">
+      [maxInactiveSidePages]="1">
       <ng-template appTableColTemplate [columnName]="'Icon'" let-data='data'>
         <img class="img-fluid" [src]="data.thumbnailUrl" alt="Icon-URL"/>
       </ng-template>
@@ -50,8 +48,7 @@
       [sortEnabled]="true"
       [localArray]="localArray1"
       [onClick]="onClickTable3"
-      [maxInactiveSidePages]="1"
-      class="card py-3">
+      [maxInactiveSidePages]="1">
     </app-smart-table>
 
   </div>

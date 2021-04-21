@@ -1,3 +1,8 @@
 app-smart-table-searchbar{
   margin-bottom: 0px;
 }
+
+.card{
+  border-width: 2px;
+  border-radius: 8px;
+}

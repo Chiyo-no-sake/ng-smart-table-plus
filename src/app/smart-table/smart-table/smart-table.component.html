@@ -1,7 +1,7 @@
-<app-remote-table *ngIf="!localTable; else templateRef" [getData]="getData" [requestData]="requestData">
+<app-remote-table *ngIf="!localTable; else templateRef" [getData]="getData" [requestData]="requestData" class="card border-dark">
 
 </app-remote-table>
 
-<ng-template #templateRef>
-  <app-local-table [requestData]="requestData" [localArray]="localArray"></app-local-table>
+<ng-template #templateRef >
+  <app-local-table [requestData]="requestData" [localArray]="localArray" class="card border-dark"></app-local-table>
 </ng-template>
