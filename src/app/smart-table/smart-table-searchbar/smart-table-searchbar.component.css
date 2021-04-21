@@ -1,7 +1,5 @@
 .btn {
-  border-top-right-radius: 6px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
+  border-radius: 0;
   width: 50px;
 }
 

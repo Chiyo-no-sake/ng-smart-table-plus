@@ -10,6 +10,7 @@ import {SmartTableTemplateDirective} from '../smart-table-template.directive';
 })
 export class SmartTableContentComponent<T> implements OnInit, AfterViewInit{
   templateRefs: {[key: string]: TemplateRef<SmartTableTemplateDirective>} = {};
+  @Input() searchBar: TemplateRef<any>;
 
   constructor(public dataService: SmartTableDataService<T>) {
   }

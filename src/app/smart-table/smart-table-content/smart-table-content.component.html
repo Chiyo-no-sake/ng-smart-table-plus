@@ -1,3 +1,7 @@
+<ng-template [ngTemplateOutlet]="searchBar">
+
+</ng-template>
+
 <tr (click)="dataService.onClick(element)" *ngFor="let element of dataService.responseData.data">
   <td *ngFor="let header of dataService.headers">
     <p *ngIf="templateRefs[header] === undefined; else templateDefined">

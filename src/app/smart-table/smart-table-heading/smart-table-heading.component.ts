@@ -12,7 +12,6 @@ type directionType = 'no-sort' | 'asc' | 'desc';
 })
 export class SmartTableHeadingComponent<T> implements OnInit {
   @Output() headerSortChanged = new EventEmitter<{ header: string, direction: directionType }>();
-  @Input() searchBar: TemplateRef<any>;
 
   faAngleUp = faAngleUp;
   faAngleDown = faAngleDown;
