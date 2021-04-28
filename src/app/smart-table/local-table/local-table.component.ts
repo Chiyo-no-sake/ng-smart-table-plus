@@ -53,19 +53,10 @@ export class LocalTableComponent<T> implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.requestData = {
-      paginationEnabled: true,
-      pageSize: 5,
-      pageNumber: 0,
-      sortEnabled: true,
-      sortHeaderName: this.dataService.headers[2],
-      sortOrder: 'asc'
-    };
-
     this.dataService.responseData = {
       elementsNumber: this.localArray.length,
-      pagesNumber: 1,
-      data: this.localArray,
+      pagesNumber: Math.ceil(this.localArray.length / this.requestData.pageSize),
+      data: this.localArray.slice(0, this.requestData.pageSize),
     };
   }
 
@@ -97,7 +88,7 @@ export class LocalTableComponent<T> implements OnInit, OnDestroy {
       }, 600);
     }
 
-    if (this.dataService.sortEnabled) {
+    if (this.requestData.sortEnabled) {
       result = this.sort(this.requestData.sortOrder, result);
     }
 

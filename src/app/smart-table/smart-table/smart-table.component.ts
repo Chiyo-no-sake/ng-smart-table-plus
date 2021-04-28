@@ -17,6 +17,8 @@ export class SmartTableComponent<T> implements OnInit, OnDestroy, AfterViewInit 
   constructor(public dataService: SmartTableDataService<T>) {
   }
 
+  defaultPerPageOptions: number[] = [5, 10, 25, 50, 100];
+
   subscription: Subscription;
   localTable: boolean;
 
@@ -29,6 +31,7 @@ export class SmartTableComponent<T> implements OnInit, OnDestroy, AfterViewInit 
   @Input() onClick: (t: T) => void;
   @Input() getData?: (requestData: RequestData) => Observable<ResponseData<T>>;
   @Input() localArray?: T[];
+  @Input() perPageOptions?: number[];
 
   // optionals
   @Input() maxInactiveSidePages = 1;
@@ -62,6 +65,11 @@ export class SmartTableComponent<T> implements OnInit, OnDestroy, AfterViewInit 
   }
 
   ngOnInit(): void {
+    if (this.perPageOptions !== undefined && !this.paginationEnabled) {
+      throw new Error(`Cannot provide perPageOptions with pagination disabled`);
+    } else if (this.perPageOptions === undefined && this.paginationEnabled) {
+      this.perPageOptions = this.defaultPerPageOptions;
+    }
     SmartTableComponent.checkInput(this.headers, 'headers');
     SmartTableComponent.checkInput(this.getCellContent, 'getCellContent');
     SmartTableComponent.checkInput(this.onClick, 'onClick');
@@ -74,11 +82,10 @@ export class SmartTableComponent<T> implements OnInit, OnDestroy, AfterViewInit 
       this.localTable = true;
     }
     this.requestData = {
-      paginationEnabled: true,
-      pageSize: 5,
+      paginationEnabled: this.paginationEnabled,
+      pageSize: (this.perPageOptions === undefined) ? 2 : this.perPageOptions[0],
       pageNumber: 0,
-      sortEnabled: true,
-      sortHeaderName: this.headers[0],
+      sortEnabled: false,
       sortOrder: 'asc'
     };
 
@@ -88,6 +95,7 @@ export class SmartTableComponent<T> implements OnInit, OnDestroy, AfterViewInit 
     this.dataService.searchEnabled = this.searchEnabled;
     this.dataService.paginationEnabled = this.paginationEnabled;
     this.dataService.sortEnabled = this.sortEnabled;
+    this.dataService.perPageOptions = this.perPageOptions;
   }
 
   ngAfterViewInit(): void {

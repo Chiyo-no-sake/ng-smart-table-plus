@@ -46,10 +46,13 @@ export class AppComponent implements OnInit {
   }
 
   localArray1 = [{title: 'ciccio', description: 'merda'},
-    {title: 'pippo', description: 'coca'}, {
-      title: 'io',
-      description: 'mi dissocio'
-    }];
+    {title: 'pippo', description: 'coca'},
+    {title: 'io', description: 'mi dissocio'},
+    {title: 'antasi', description: 'merillo'},
+    {title: 'sovrada', description: 'curi'},
+    {title: 'pulk', description: 'sebi'},
+    {title: 'pipfgpo', description: 'coca'},
+    {title: 'sama', description: 'coca'},];
   table3headers = ['Title', 'Description'];
 
   title = 'smart-table-component-example';
@@ -58,6 +61,8 @@ export class AppComponent implements OnInit {
 
   table2headers = ['Icon', 'Title', 'URL'];
   imagesURI = 'https://jsonplaceholder.typicode.com/photos';
+
+  table3perPageOptions = [1, 2, 3];
 
   private static attachParam(str: string, param: string, value: string): string {
     if (!(str.endsWith('&') || str.endsWith('?'))) {

@@ -4,11 +4,7 @@
       Show
     </p>
     <select #s (change)="onRowsPerPageChange(s.value)" class="form-control form-control-sm">
-      <option value="5">5</option>
-      <option value="10">10</option>
-      <option value="25">25</option>
-      <option value="50">50</option>
-      <option value="100">100</option>
+      <option *ngFor="let opt of dataService.perPageOptions" [value]="opt">{{opt}}</option>
     </select>
     <p class="ml-2 mb-0 text-dark">
       entries
@@ -20,8 +16,8 @@
         (click)="li !==placeHolderString && li !== placeHolderString && onPageChange(li-1)"
         class="page-item">
       <a
-        class="page-link"
-        href="#">
+        style="cursor:pointer;"
+        class="page-link">
         {{li}}
       </a>
     </li>

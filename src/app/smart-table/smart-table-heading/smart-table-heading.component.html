@@ -1,6 +1,6 @@
 <tr>
   <th scope="col" *ngFor="let el of tableData.headers" (click)="tableData.sortEnabled && onHeaderSortRequest(el)">
-    <div class="d-flex flex-row">
+    <div class="d-flex flex-row" style="cursor:pointer;">
       <p class="m-0">{{el}}</p>
       <fa-icon
         *ngIf="!loading && headerSorted === el"
