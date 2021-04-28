@@ -22,7 +22,7 @@ export class SmartTableDataService<T> {
   getCellContent: (t: T, header: string) => string;
   onClick: (t: T) => void;
   headerTemplates: { [key: string]: TemplateRef<SmartTableTemplateDirective> } = {};
-  sortEnabled = false;
+  sortOnColumn: boolean[];
   paginationEnabled = false;
   searchEnabled = false;
   responseData: ResponseData<T> = {pagesNumber: 0, data: []};

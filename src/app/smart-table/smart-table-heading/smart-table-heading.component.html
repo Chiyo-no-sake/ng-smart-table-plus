@@ -1,5 +1,5 @@
 <tr>
-  <th scope="col" *ngFor="let el of tableData.headers" (click)="tableData.sortEnabled && onHeaderSortRequest(el)">
+  <th scope="col" *ngFor="let el of tableData.headers; let i = index" (click)="tableData.sortOnColumn[i] && onHeaderSortRequest(el)">
     <div class="d-flex flex-row">
       <p class="m-0">{{el}}</p>
       <fa-icon
