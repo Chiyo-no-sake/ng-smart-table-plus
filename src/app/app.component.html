@@ -1,56 +1,65 @@
+<div class="bg-foreground-top position-absolute"></div>
+<div class="bg-foreground-mid position-absolute"></div>
+<div class="bg-foreground-bot position-absolute"></div>
+
+
 <div class="d-flex flex-row justify-content-center">
   <div class="col-xl-7 col-lg-8 colcol-md-9 pt-5">
     <h1 class="text-dark text-center">Smart Table</h1>
     <h4 class="text-primary text-center">Showcase</h4>
     <br>
-    <h4 class="text-dark text-center"> Use Case 1: Remote post array </h4>
-    <app-smart-table
-      [getCellContent]="getCellContentTable1"
-      [headers]="table1headers"
-      [getData]="getTable1Data"
-      [onClick]="onClickTable1"
-      [maxInactiveSidePages]="2"
-      [sortOnColumn]="table1headersSort"
-      paginationEnabled="true"
-      searchEnabled="true"
-    >
-      <ng-template appTableColTemplate [columnName]="'Title'" let-data='data'>
-        <b>{{data.title}}</b>
-      </ng-template>
+    <h4 class="text-dark text-center mb-4"> Use Case 1: Remote post array </h4>
+    <div class="elevated">
+      <app-smart-table
+        [getCellContent]="getCellContentTable1"
+        [headers]="table1headers"
+        [getData]="getTable1Data"
+        [onClick]="onClickTable1"
+        [maxInactiveSidePages]="2"
+        [sortOnColumn]="table1headersSort"
+        paginationEnabled="true"
+        searchEnabled="true"
+      >
+        <ng-template appTableColTemplate [columnName]="'Title'" let-data='data'>
+          <b>{{data.title}}</b>
+        </ng-template>
 
-      <ng-template appTableColTemplate [columnName]="'Price'" let-data='data'>
-        <p>${{data.price}}</p>
-      </ng-template>
-    </app-smart-table>
+        <ng-template appTableColTemplate [columnName]="'Price'" let-data='data'>
+          <p>${{data.price}}</p>
+        </ng-template>
+      </app-smart-table>
+    </div>
+    <br class="mt-5">
+    <h4 class="text-dark text-center mb-4"> Use Case 2: Remote albums array with Icons </h4>
+
+    <div class="elevated">
+
+      <app-smart-table
+        [getCellContent]="getCellContentTable1"
+        [headers]="table2headers"
+        [getData]="getTable2Data"
+        [onClick]="onClickTable2"
+        [maxInactiveSidePages]="1">
+        <ng-template appTableColTemplate [columnName]="'Icon'" let-data='data'>
+          <img class="img-fluid" [src]="data.thumbnailUrl" alt="Icon-URL"/>
+        </ng-template>
+      </app-smart-table>
+    </div>
 
     <br class="mt-5">
-    <h4 class="text-dark text-center"> Use Case 2: Remote albums array with Icons </h4>
-
-    <app-smart-table
-      [getCellContent]="getCellContentTable1"
-      [headers]="table2headers"
-      [getData]="getTable2Data"
-      [onClick]="onClickTable2"
-      [maxInactiveSidePages]="1">
-      <ng-template appTableColTemplate [columnName]="'Icon'" let-data='data'>
-        <img class="img-fluid" [src]="data.thumbnailUrl" alt="Icon-URL"/>
-      </ng-template>
-    </app-smart-table>
-
-    <br class="mt-5">
-    <h4 class="text-dark text-center"> Use Case 3: Local objects array</h4>
-
-    <app-smart-table
-      [getCellContent]="getCellContentTable3"
-      [headers]="table3headers"
-      [paginationEnabled]="true"
-      [searchEnabled]="true"
-      [sortOnColumn]="table3headersSort"
-      [localArray]="localArrayTable3"
-      [onClick]="onClickTable3"
-      [maxInactiveSidePages]="1"
-      [perPageOptions]="table3perPageOptions">
-    </app-smart-table>
-
+    <h4 class="text-dark text-center mb-4"> Use Case 3: Local objects array</h4>
+    <div class="elevated">
+      <app-smart-table
+        [getCellContent]="getCellContentTable3"
+        [headers]="table3headers"
+        [paginationEnabled]="true"
+        [searchEnabled]="true"
+        [sortOnColumn]="table3headersSort"
+        [localArray]="localArrayTable3"
+        [onClick]="onClickTable3"
+        [maxInactiveSidePages]="1"
+        [perPageOptions]="table3perPageOptions">
+      </app-smart-table>
+    </div>
   </div>
 </div>
