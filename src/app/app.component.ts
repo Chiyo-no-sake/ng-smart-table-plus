@@ -45,18 +45,23 @@ export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {
   }
 
-  localArray1 = [{title: 'ciccio', description: 'merda'},
-    {title: 'pippo', description: 'coca'},
-    {title: 'io', description: 'mi dissocio'},
-    {title: 'antasi', description: 'merillo'},
-    {title: 'sovrada', description: 'curi'},
-    {title: 'pulk', description: 'sebi'},
-    {title: 'pipfgpo', description: 'coca'},
-    {title: 'sama', description: 'coca'},];
-  table3headers = ['Title', 'Description'];
+
+  localArrayTable3 = [{title: 'ciao', description: 'gianni', age: 12},
+    {title: 'pippo', description: 'pluto', age: 23},
+    {title: 'io', description: 'mi dissocio', age: 43},
+    {title: 'io', description: 'mi dissocio', age: 43},
+    {title: 'io', description: 'mi dissocio', age: 43},
+    {title: 'io', description: 'mi dissocio', age: 43},
+    {title: 'io', description: 'mi dissocio', age: 43},
+    {title: 'luca', description: 'qualcuno', age: 24},
+  ];
+
+  table3headers = ['Title', 'Description', 'Age'];
+  table3headersSort = [true, false, true];
 
   title = 'smart-table-component-example';
   table1headers = ['Title', 'Price'];
+  table1headersSort = [true, true];
   postsURI = 'http://isin03.dti.supsi.ch:81/template/bff/items';
 
   table2headers = ['Icon', 'Title', 'URL'];

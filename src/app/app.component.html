@@ -10,7 +10,7 @@
       [getData]="getTable1Data"
       [onClick]="onClickTable1"
       [maxInactiveSidePages]="2"
-      sortEnabled="true"
+      [sortOnColumn]="table1headersSort"
       paginationEnabled="true"
       searchEnabled="true"
     >
@@ -45,8 +45,8 @@
       [headers]="table3headers"
       [paginationEnabled]="true"
       [searchEnabled]="true"
-      [sortEnabled]="true"
-      [localArray]="localArray1"
+      [sortOnColumn]="table3headersSort"
+      [localArray]="localArrayTable3"
       [onClick]="onClickTable3"
       [maxInactiveSidePages]="1"
       [perPageOptions]="table3perPageOptions">

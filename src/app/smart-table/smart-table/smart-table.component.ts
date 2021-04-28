@@ -24,7 +24,7 @@ export class SmartTableComponent<T> implements OnInit, OnDestroy, AfterViewInit 
 
   // mandatory
   @Input() headers: string[];
-  @Input() sortEnabled = false;
+  @Input() sortOnColumn: boolean[];
   @Input() paginationEnabled = false;
   @Input() searchEnabled = false;
   @Input() getCellContent: (t: T, header: string) => string;
@@ -94,8 +94,8 @@ export class SmartTableComponent<T> implements OnInit, OnDestroy, AfterViewInit 
     this.dataService.onClick = this.onClick;
     this.dataService.searchEnabled = this.searchEnabled;
     this.dataService.paginationEnabled = this.paginationEnabled;
-    this.dataService.sortEnabled = this.sortEnabled;
     this.dataService.perPageOptions = this.perPageOptions;
+    this.dataService.sortOnColumn = this.sortOnColumn;
   }
 
   ngAfterViewInit(): void {

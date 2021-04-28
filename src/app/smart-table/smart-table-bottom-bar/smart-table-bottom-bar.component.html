@@ -10,18 +10,21 @@
       entries
     </p>
   </div>
-  <ul class="pagination justify-content-center m-0">
-    <li *ngFor="let li of generateRowIndices()"
-        [ngClass]="{active: li === selectedPageNumber + 1, disabled: li === placeHolderString || li === placeHolderString}"
-        (click)="li !==placeHolderString && li !== placeHolderString && onPageChange(li-1)"
-        class="page-item">
-      <a
-        style="cursor:pointer;"
-        class="page-link">
-        {{li}}
-      </a>
-    </li>
-  </ul>
-  <div *ngIf="loading" class="spinner-border spinner-grow-sm ml-3 text-primary">
+  <div class="d-flex flex-row align-items-center">
+    <div *ngIf="loading" class="spinner-border spinner-grow-sm mr-3 text-primary">
+    </div>
+    <ul class="pagination justify-content-center m-0">
+      <li *ngFor="let li of generateRowIndices()"
+          [ngClass]="{active: li === selectedPageNumber + 1, disabled: li === placeHolderString || li === placeHolderString}"
+          (click)="li !==placeHolderString && li !== placeHolderString && onPageChange(li-1)"
+          class="page-item">
+        <a
+          style="cursor:pointer;"
+          class="page-link">
+          {{li}}
+        </a>
+      </li>
+    </ul>
   </div>
+
 </nav>

@@ -38,12 +38,12 @@ export class LocalTableComponent<T> implements OnInit, OnDestroy {
   private sort(sortOrder: 'asc' | 'desc' | 'no-sort', array: T[]): T[] {
     if (sortOrder === 'asc') {
       return array.sort((a, b) =>
-        this.dataService.getCellContent(a, this.requestData.sortHeaderName).localeCompare(
-          this.dataService.getCellContent(b, this.requestData.sortHeaderName)));
+        this.dataService.getCellContent(a, this.requestData.sortHeaderName) >
+          this.dataService.getCellContent(b, this.requestData.sortHeaderName) ? 1 : -1);
     } else if (sortOrder === 'desc') {
       return array.sort((a, b) =>
-        this.dataService.getCellContent(b, this.requestData.sortHeaderName).localeCompare(
-          this.dataService.getCellContent(a, this.requestData.sortHeaderName)));
+        this.dataService.getCellContent(b, this.requestData.sortHeaderName) >
+          this.dataService.getCellContent(a, this.requestData.sortHeaderName) ? 1 : -1);
     } else {
       return array;
     }
@@ -73,7 +73,7 @@ export class LocalTableComponent<T> implements OnInit, OnDestroy {
         });
         let found = false;
         contents.forEach((e) => {
-          if (e.toLowerCase().includes(this.requestData.searchQuery.toLowerCase())) {
+          if (e.toString().toLowerCase().includes(this.requestData.searchQuery.toLowerCase())) {
             found = true;
           }
         });
@@ -95,7 +95,6 @@ export class LocalTableComponent<T> implements OnInit, OnDestroy {
     if (this.dataService.paginationEnabled) {
       const elementsPerPage = this.requestData.pageSize;
       const selectedPage = this.requestData.pageNumber;
-      console.log('selectedPage:' + selectedPage);
       result = result.slice((elementsPerPage * selectedPage), (elementsPerPage * (selectedPage + 1)));
       pagesNumber = Math.ceil(elementsNumber / elementsPerPage);
     }
@@ -136,8 +135,9 @@ export class LocalTableComponent<T> implements OnInit, OnDestroy {
       this.requestData.sortEnabled = true;
       this.requestData.sortOrder = headerChange.direction;
       this.requestData.sortHeaderName = headerChange.header;
-      this.computeElements();
     }
+
+    this.computeElements();
     this.headings.loading = false;
   }
 
