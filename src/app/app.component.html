@@ -1,15 +1,13 @@
-<div class="bg-foreground-top position-absolute"></div>
-<div class="bg-foreground-mid position-absolute"></div>
-<div class="bg-foreground-bot position-absolute"></div>
-
-
-<div class="d-flex flex-row justify-content-center">
-  <div class="col-xl-7 col-lg-8 colcol-md-9 pt-5">
+<div class="d-flex flex-row justify-content-center main">
+  <div class="col-xl-9 col-lg-10 col-md-11 pt-5">
     <h1 class="text-dark text-center">Smart Table</h1>
     <h4 class="text-primary text-center">Showcase</h4>
     <br>
     <h4 class="text-dark text-center mb-4"> Use Case 1: Remote post array </h4>
-    <div class="elevated">
+
+
+    <!-- Table 1 -->
+    <div class="elevated flex-grow-1">
       <app-smart-table
         [getCellContent]="getCellContentTable1"
         [headers]="table1headers"
@@ -29,11 +27,13 @@
         </ng-template>
       </app-smart-table>
     </div>
+    <!-- End Table 1 -->
+
     <br class="mt-5">
     <h4 class="text-dark text-center mb-4"> Use Case 2: Remote albums array with Icons </h4>
 
+    <!-- Table 2 -->
     <div class="elevated">
-
       <app-smart-table
         [getCellContent]="getCellContentTable1"
         [headers]="table2headers"
@@ -48,6 +48,8 @@
 
     <br class="mt-5">
     <h4 class="text-dark text-center mb-4"> Use Case 3: Local objects array</h4>
+
+    <!-- Table 3 -->
     <div class="elevated">
       <app-smart-table
         [getCellContent]="getCellContentTable3"

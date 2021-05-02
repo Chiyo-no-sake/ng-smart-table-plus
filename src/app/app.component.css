@@ -6,26 +6,6 @@
   border-radius: 30px;
 }
 
-.bg-foreground-top{
-  top: 270px;
-  width: 100%;
-  height: 400px;
-  background-color: #EB8258;
-  transform: skewY(3deg);
+.main {
 }
 
-.bg-foreground-mid{
-  top: 1000px;
-  width: 100%;
-  height: 1500px;
-  background-color: #D8DC6A;
-  transform: skewY(-3deg);
-}
-
-.bg-foreground-bot{
-  top: 2770px;
-  width: 100%;
-  height: 250px;
-  background-color: #BABFD1;
-  transform: skewY(3deg);
-}
