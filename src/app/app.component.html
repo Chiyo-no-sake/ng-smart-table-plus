@@ -13,7 +13,7 @@
         [headers]="table1headers"
         [getData]="getTable1Data"
         [onClick]="onClickTable1"
-        [maxInactiveSidePages]="2"
+        [maxInactiveSidePages]="1"
         [sortOnColumn]="table1headersSort"
         paginationEnabled="true"
         searchEnabled="true"
@@ -61,6 +61,9 @@
         [onClick]="onClickTable3"
         [maxInactiveSidePages]="1"
         [perPageOptions]="table3perPageOptions">
+        <ng-template appTableColTemplate [columnName]="'Description'" let-data="data">
+          <p style="color: red">{{data.description}}</p>
+        </ng-template>
       </app-smart-table>
     </div>
   </div>
