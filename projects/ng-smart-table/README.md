@@ -1,24 +1,43 @@
-# NgSmartTable
+# Anular Smart Table
+This repo hosts the developement page of the npm package ng-smart-table-plus.
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.11.
+![Capture](https://user-images.githubusercontent.com/20605899/117418896-3babec00-af1c-11eb-9e51-341f187f52f9.PNG)
 
-## Code scaffolding
+This component is used to display data from remote back-end or from local array.
+Features are:
+- search bar
+- sorting on each column (can be enabled or disabled for each column)
+- pagination
+- custom template to display custom content in each cell
+- click callback on each row
 
-Run `ng generate component component-name --project ng-smart-table` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project ng-smart-table`.
-> Note: Don't forget to add `--project ng-smart-table` or else it will be added to the default project in your `angular.json` file. 
 
-## Build
+## Usage
 
-Run `ng build ng-smart-table` to build the project. The build artifacts will be stored in the `dist/` directory.
+Install the package by running <code>npm install ng-smart-table-plus</code>.
+Then add an import for "SmartTableModule" in your app module.
+Now you are able to use SmartTableComponent inside your app!
 
-## Publishing
+### Usage Example
+```html
+<app-smart-table
+        [getCellContent]="getCellContentTable1"
+        [headers]="table2headers"
+        [getData]="getTable2Data"
+        [onClick]="onClickTable2"
+        [maxInactiveSidePages]="1">
+        <ng-template appTableColTemplate [columnName]="'Icon'" let-data='data'>
+          <img class="img-fluid" [src]="data.thumbnailUrl" alt="Icon-URL"/>
+        </ng-template>
+</app-smart-table>
+``` 
 
-After building your library with `ng build ng-smart-table`, go to the dist folder `cd dist/ng-smart-table` and run `npm publish`.
-
-## Running unit tests
-
-Run `ng test ng-smart-table` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+### Component Properties
+- <b> headers: string[] </b> are the headers that will be displayed 
+- <b> sortOnColumn: boolean[] </b> one flag for each column, enables or disables sorting on that column
+- <b> paginationEnabled: boolean </b> whether pagination is enabled or not
+- <b> searchEnabled: boolean </b> whether search is enabled or not
+- <b> localArray: T[] </b> the array of data that should be represented. T is a generic type. Specify this only if you want to work with local data
+- <b> paginationEnabled: boolean </b> whether pagination is enabled or not
+- <b> perPageOptions: number[] </b> is an array that represent the options displayed in the "shows #N entries"
+- <b> getData(requestData: RequestData<T>) : Observable<ResponseData<T>> </b> is a callback used when the table need to be configured with a backend. This callback has to parse the requestData object, compute the request data to be done to the backend, and return the observable of that request. The observable response has to be wrapped in a ResponseData object, in order to incude data such as total page numbers for the paginator.
