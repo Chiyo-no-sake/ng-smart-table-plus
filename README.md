@@ -18,6 +18,20 @@ Install the package by running <code>npm install ng-smart-table-plus</code>.
 Then add an import for "SmartTableModule" in your app module.
 Now you are able to use SmartTableComponent inside your app!
 
+### Usage Example
+```javascript
+<app-smart-table
+        [getCellContent]="getCellContentTable1"
+        [headers]="table2headers"
+        [getData]="getTable2Data"
+        [onClick]="onClickTable2"
+        [maxInactiveSidePages]="1">
+        <ng-template appTableColTemplate [columnName]="'Icon'" let-data='data'>
+          <img class="img-fluid" [src]="data.thumbnailUrl" alt="Icon-URL"/>
+        </ng-template>
+      </app-smart-table>
+``` 
+
 ### Component Properties
 - <b> headers: string[] </b> are the headers that will be displayed 
 - <b> sortOnColumn: boolean[] </b> one flag for each column, enables or disables sorting on that column
