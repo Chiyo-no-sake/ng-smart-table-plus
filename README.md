@@ -19,7 +19,7 @@ Then add an import for "SmartTableModule" in your app module.
 Now you are able to use SmartTableComponent inside your app!
 
 ### Usage Example
-```javascript
+```html
 <app-smart-table
         [getCellContent]="getCellContentTable1"
         [headers]="table2headers"
@@ -29,7 +29,7 @@ Now you are able to use SmartTableComponent inside your app!
         <ng-template appTableColTemplate [columnName]="'Icon'" let-data='data'>
           <img class="img-fluid" [src]="data.thumbnailUrl" alt="Icon-URL"/>
         </ng-template>
-      </app-smart-table>
+</app-smart-table>
 ``` 
 
 ### Component Properties
