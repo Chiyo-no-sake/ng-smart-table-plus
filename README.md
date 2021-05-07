@@ -14,7 +14,7 @@ Features are:
 
 ## Usage
 
-Install the package by running '''npm install ng-smart-table-plus'''.
+Install the package by running <code>npm install ng-smart-table-plus</code>.
 Then add an import for "SmartTableModule" in your app module.
 Now you are able to use SmartTableComponent inside your app!
 
