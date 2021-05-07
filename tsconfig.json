@@ -10,6 +10,12 @@
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
+    "paths": {
+      "ng-smart-table-plus": [
+        "dist/ng-smart-table/ng-smart-table",
+        "dist/ng-smart-table"
+      ]
+    },
     "target": "es2015",
     "module": "es2020",
     "lib": [

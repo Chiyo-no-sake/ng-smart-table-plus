@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {RequestData, ResponseData} from './smart-table/services/smart-table-data.service';
+import {ResponseData, RequestData} from "ng-smart-table-plus";
 import {map} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 
