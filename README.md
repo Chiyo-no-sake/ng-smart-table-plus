@@ -1,4 +1,4 @@
-# Anular Smart Table
+# Angular Smart Table
 This repo hosts the developement page of the npm package ng-smart-table-plus.
 
 ![Capture](https://user-images.githubusercontent.com/20605899/117418896-3babec00-af1c-11eb-9e51-341f187f52f9.PNG)
